@@ -5,10 +5,10 @@
 }
 
 body {
-  height: 100vh;
+  overflow: hidden;
 }
 
-.first-page-head {
+header {
   background-color: dodgerblue;
   height: 12rem;
   width: 100%;
@@ -18,11 +18,22 @@ body {
   align-items: center;
 }
 
+div {
+  font-size: 20px;
+  margin: auto;
+}
+
 .btn {
-    b
+  background-color: chocolate;
+  border-radius: 15%;
+  height: 30px;
+  width: 8%;
+  font-size: 18px;
+  margin: auto;
 }
 
 canvas {
   border: 1px solid black;
   background-image: url(./images/piste.jpg);
+  background-repeat: repeat-x;
 }

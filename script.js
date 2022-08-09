@@ -1,19 +1,19 @@
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
-
+const startBtn = document.querySelector(`.btn`);
 canvas.width = document.body.clientWidth;
-canvas.height = document.body.clientHeight;
+let animationId;
 
-const runner = new Image();
-runner.src = "/images/Sprite.png";
+const runner1 = new Image();
+runner1.src = "/images/Sprite.png";
 
-const sprite = {
+const sprite1 = {
   width: 128,
-  height: 163,
+  height: 165,
   frameRate: 60,
   speed: 2,
   x: 0,
-  y: 150,
+  y: 165,
   lastTimestamp: null,
 
   draw(timestamp) {
@@ -32,7 +32,7 @@ const sprite = {
 
     // load image on canvas
     context.drawImage(
-      runner,
+      runner1,
       frameIndex * this.width,
       0,
       this.width,
@@ -45,12 +45,16 @@ const sprite = {
   },
 };
 
-requestAnimationFrame(updateCanvas);
-
+//
 function updateCanvas(timestamp) {
-  requestAnimationFrame(updateCanvas);
-
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  sprite.draw(timestamp);
+  sprite1.draw(timestamp);
+
+  animationId = requestAnimationFrame(updateCanvas);
+  console.log(animationId);
 }
+
+startBtn.addEventListener("click", () => {
+  updateCanvas();
+});
