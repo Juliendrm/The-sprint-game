@@ -6,11 +6,10 @@ let animationId;
 
 const runner1 = new Image();
 runner1.src = "/images/Sprite.png";
-
 const sprite1 = {
   width: 128,
   height: 165,
-  frameRate: 60,
+  frameRate: 30,
   speed: 2,
   x: 0,
   y: 165,
@@ -51,10 +50,26 @@ function updateCanvas(timestamp) {
 
   sprite1.draw(timestamp);
 
+  document.querySelector("#distance span").textContent = (
+    sprite1.x / 4
+  ).toFixed(2);
+  sprite1.x; // Get the distance with the runner moving
   animationId = requestAnimationFrame(updateCanvas);
-  console.log(animationId);
+  //   console.log(animationId);
 }
 
 startBtn.addEventListener("click", () => {
   updateCanvas();
+});
+
+let count = document.querySelector("#countdown");
+let i = 30;
+count.textContent = 30;
+startBtn.addEventListener("click", () => {
+  setInterval(() => {
+    if (i > 0) {
+      i--;
+    }
+    count.textContent = `${i}`;
+  }, 1000);
 });

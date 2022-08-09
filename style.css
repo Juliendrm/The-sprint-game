@@ -37,3 +37,18 @@ canvas {
   background-image: url(./images/piste.jpg);
   background-repeat: repeat-x;
 }
+
+.randomKey {
+  border: 2px solid black;
+  background-color: chocolate;
+  text-align: center;
+  height: 50px;
+}
+
+.infos {
+  border: 2px solid black;
+  background-color: chocolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
