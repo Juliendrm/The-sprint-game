@@ -1,10 +1,56 @@
-const canvas = document.querySelector('canvas');
+const canvas = document.querySelector("canvas");
+const context = canvas.getContext("2d");
 
 canvas.width = document.body.clientWidth;
 canvas.height = document.body.clientHeight;
-const context = canvas.getContext("2d");
 
 const runner = new Image();
-runner.src ="./images/kisspng-sprite-2d-computer-graphics-video-games-character-index-of-ozcan-ders-rsprite-diger-5b7b65f47d2936.6027378215348136845127.png";
+runner.src = "/images/Sprite.png";
 
-context.drawImage(runner, 40, 40, 150, 200);
+const sprite = {
+  width: 128,
+  height: 163,
+  frameRate: 60,
+  speed: 2,
+  x: 0,
+  y: 150,
+  lastTimestamp: null,
+
+  draw(timestamp) {
+    const frame = Math.floor(timestamp / this.frameRate);
+    const frameIndex = frame % 8;
+    // how long since last frame?
+    if (this.lastTimestamp) {
+      const elapsedTime = timestamp - this.lastTimestamp;
+      // move sprite along by speed * time
+      this.x += (this.speed * elapsedTime) / 100;
+    }
+
+    this.x %= canvas.width;
+
+    this.lastTimestamp = timestamp;
+
+    // load image on canvas
+    context.drawImage(
+      runner,
+      frameIndex * this.width,
+      0,
+      this.width,
+      this.height,
+      this.x,
+      this.y,
+      this.width / 2,
+      this.height / 2
+    );
+  },
+};
+
+requestAnimationFrame(updateCanvas);
+
+function updateCanvas(timestamp) {
+  requestAnimationFrame(updateCanvas);
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  sprite.draw(timestamp);
+}

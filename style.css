@@ -1,23 +1,28 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
 }
 
 .first-page-head {
-    background-color: dodgerblue;
-    height: 15rem;
-    width: 100%;
-    border: ;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: dodgerblue;
+  height: 12rem;
+  width: 100%;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-main {
-    
+.btn {
+    b
 }
 
 canvas {
-    border: 2px solid black;
+  border: 1px solid black;
+  background-image: url(./images/piste.jpg);
 }
