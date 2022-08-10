@@ -4,7 +4,10 @@ const startBtn = document.querySelector(`.btn`);
 canvas.width = document.body.clientWidth;
 let animationId;
 const oneKey = document.querySelector(".randomKey span"); // For random key
-const highscore = document.querySelector(".highscore span");
+let highscoreElement = document.querySelector("#highscore span");
+let highscore = 0;
+let distanceElement = document.querySelector("#distance span");
+let distance = 0;
 let intervalId = null;
 
 // Initialization of the runner
@@ -54,9 +57,8 @@ function updateCanvas(timestamp) {
 
   sprite.draw(timestamp);
 
-  document.querySelector("#distance span").textContent = (sprite.x / 5).toFixed(
-    2
-  );
+  distance = (sprite.x / 5).toFixed(2);
+  distanceElement.textContent = distance;
   sprite.x; // Get the distance with the runner moving
   animationId = requestAnimationFrame(updateCanvas);
   //   console.log(animationId);
@@ -83,16 +85,20 @@ startBtn.addEventListener(
         changeLetterTiming = 0;
       }
       if (i === 0) {
-        // sprite.speed = 0;
         clearInterval(intervalId);
         cancelAnimationFrame(animationId);
+
+        if (highscore < distance) {
+          highscore = distance;
+          highscoreElement.textContent = highscore;
+        }
       }
     }, 1000);
   },
   { once: true }
 );
 
-// Get a random keyboard touch (uppercasesm lowercases and numbers rom 0 to 9);
+// Get a random keyboard touch (lowercases and numbers rom 0 to 9);
 let array = [
   "a",
   "b",
@@ -147,7 +153,5 @@ document.addEventListener("keydown", function event(event) {
     }, 400);
   }
 });
-
-// Stop the game when counter is equal to 0
 
 // Link the highscore with the distance
