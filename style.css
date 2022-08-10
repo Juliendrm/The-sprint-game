@@ -32,6 +32,15 @@ div {
   margin: auto;
 }
 
+.reset {
+  background-color: chocolate;
+  border-radius: 15%;
+  height: 30px;
+  width: 8%;
+  font-size: 18px;
+  margin: auto;
+}
+
 canvas {
   border: 1px solid black;
   background-image: url(./images/piste.jpg);

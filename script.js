@@ -1,6 +1,7 @@
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 const startBtn = document.querySelector(`.btn`);
+const resetBtn = document.querySelector(".reset");
 canvas.width = document.body.clientWidth;
 let animationId;
 const oneKey = document.querySelector(".randomKey span"); // For random key
@@ -9,6 +10,7 @@ let highscore = 0;
 let distanceElement = document.querySelector("#distance span");
 let distance = 0;
 let intervalId = null;
+let isGameStarted = false;
 
 // Initialization of the runner
 const runner1 = new Image();
@@ -25,16 +27,6 @@ const sprite = {
   draw(timestamp) {
     const frame = Math.floor(timestamp / this.frameRate);
     const frameIndex = frame % 8;
-    // how long since last frame?
-    if (this.lastTimestamp) {
-      const elapsedTime = timestamp - this.lastTimestamp;
-      // move sprite along by speed * time
-      this.x += (this.speed * elapsedTime) / 100;
-    }
-
-    this.x %= canvas.width;
-
-    this.lastTimestamp = timestamp;
 
     // load image on canvas
     context.drawImage(
@@ -49,12 +41,27 @@ const sprite = {
       this.height / 2
     );
   },
+  move(timestamp) {
+    // how long since last frame?
+    if (this.lastTimestamp) {
+      const elapsedTime = timestamp - this.lastTimestamp;
+      // move sprite along by speed * time
+      this.x += (this.speed * elapsedTime) / 100;
+    }
+
+    this.x %= canvas.width;
+
+    this.lastTimestamp = timestamp;
+  },
 };
 
 //
 function updateCanvas(timestamp) {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
+  if (isGameStarted) {
+    sprite.move(timestamp);
+  }
   sprite.draw(timestamp);
 
   distance = (sprite.x / 5).toFixed(2);
@@ -64,40 +71,43 @@ function updateCanvas(timestamp) {
   //   console.log(animationId);
 }
 
-//Countdown of 30seconds when player clicked start button. It also display the character when button is pressed with updateCanvas()
+//Countdown of 30seconds when player clicked start button. It also display the character when button is pressed with updateCanvas() Also I linked distance with highscore.
 let count = document.querySelector("#countdown");
-let i = 30;
+let i = 5;
 let changeLetterTiming = 0;
-count.textContent = 30;
+count.textContent = i;
 
-startBtn.addEventListener(
-  "click",
-  () => {
-    updateCanvas();
-    intervalId = setInterval(() => {
-      if (i > 0) {
-        i--;
-      }
-      count.textContent = `${i}`;
-      changeLetterTiming++;
-      if (changeLetterTiming === 1) {
-        getRandomKey();
-        changeLetterTiming = 0;
-      }
-      if (i === 0) {
-        clearInterval(intervalId);
-        cancelAnimationFrame(animationId);
+startBtn.addEventListener("click", startTheGame);
 
-        if (highscore < distance) {
-          highscore = distance;
-          highscoreElement.textContent = highscore;
-        }
-      }
-    }, 1000);
-  },
-  { once: true }
-);
+function startTheGame() {
+  if (isGameStarted) {
+    return;
+  }
 
+  isGameStarted = true;
+  requestAnimationFrame(updateCanvas);
+  intervalId = setInterval(() => {
+    if (i > 0) {
+      i--;
+    }
+    count.textContent = `${i}`;
+    changeLetterTiming++;
+    if (changeLetterTiming === 1) {
+      getRandomKey();
+      changeLetterTiming = 0;
+    }
+    if (i === 0) {
+      isGameStarted = false;
+      clearInterval(intervalId);
+      cancelAnimationFrame(animationId);
+
+      if (highscore < distance) {
+        highscore = distance;
+        highscoreElement.textContent = highscore;
+      }
+    }
+  }, 1000);
+}
 // Get a random keyboard touch (lowercases and numbers rom 0 to 9);
 let array = [
   "a",
@@ -154,4 +164,16 @@ document.addEventListener("keydown", function event(event) {
   }
 });
 
-// Link the highscore with the distance
+//reset game
+resetBtn.addEventListener("click", () => {
+  if (isGameStarted) {
+    // can't reset while started
+    return;
+  }
+  i = 5;
+  distance = 0;
+  sprite.x = 0;
+  sprite.y = 165;
+  highscoreElement.textContent = highscore;
+  requestAnimationFrame(updateCanvas);
+});
