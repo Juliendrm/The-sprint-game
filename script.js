@@ -4,6 +4,8 @@ const startBtn = document.querySelector(`.btn`);
 canvas.width = document.body.clientWidth;
 let animationId;
 const oneKey = document.querySelector(".randomKey span"); // For random key
+const highscore = document.querySelector(".highscore span");
+let intervalId = null;
 
 // Initialization of the runner
 const runner1 = new Image();
@@ -60,30 +62,35 @@ function updateCanvas(timestamp) {
   //   console.log(animationId);
 }
 
-//Display character running when start button is clicked
-startBtn.addEventListener("click", () => {
-  updateCanvas();
-});
-
-//Countdown of 30seconds when player clicked start button
+//Countdown of 30seconds when player clicked start button. It also display the character when button is pressed with updateCanvas()
 let count = document.querySelector("#countdown");
 let i = 30;
 let changeLetterTiming = 0;
 count.textContent = 30;
 
-startBtn.addEventListener("click", () => {
-  setInterval(() => {
-    if (i > 0) {
-      i--;
-    }
-    count.textContent = `${i}`;
-    changeLetterTiming++;
-    if (changeLetterTiming === 1) {
-      getRandomKey();
-      changeLetterTiming = 0;
-    }
-  }, 1000);
-});
+startBtn.addEventListener(
+  "click",
+  () => {
+    updateCanvas();
+    intervalId = setInterval(() => {
+      if (i > 0) {
+        i--;
+      }
+      count.textContent = `${i}`;
+      changeLetterTiming++;
+      if (changeLetterTiming === 1) {
+        getRandomKey();
+        changeLetterTiming = 0;
+      }
+      if (i === 0) {
+        // sprite.speed = 0;
+        clearInterval(intervalId);
+        cancelAnimationFrame(animationId);
+      }
+    }, 1000);
+  },
+  { once: true }
+);
 
 // Get a random keyboard touch (uppercasesm lowercases and numbers rom 0 to 9);
 let array = [
@@ -133,10 +140,14 @@ function getRandomKey() {
 // Effect of touching the right key
 document.addEventListener("keydown", function event(event) {
   if (oneKey.textContent === event.key) {
-    console.log(oneKey.textContent, event.key);
-    sprite.speed = 3;
+    // console.log(oneKey.textContent, event.key);
+    sprite.speed = 8;
     setTimeout(() => {
-      sprite.speed = 1;
-    }, 300);
+      sprite.speed = 2;
+    }, 400);
   }
 });
+
+// Stop the game when counter is equal to 0
+
+// Link the highscore with the distance
