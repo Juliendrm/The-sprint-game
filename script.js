@@ -3,11 +3,12 @@ const context = canvas.getContext("2d");
 const startBtn = document.querySelector(`.btn`);
 canvas.width = document.body.clientWidth;
 let animationId;
+const oneKey = document.querySelector(".randomKey span"); // For random key
 
 // Initialization of the runner
 const runner1 = new Image();
 runner1.src = "/images/Sprite.png";
-const sprite1 = {
+const sprite = {
   width: 128,
   height: 165,
   frameRate: 50,
@@ -49,12 +50,12 @@ const sprite1 = {
 function updateCanvas(timestamp) {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  sprite1.draw(timestamp);
+  sprite.draw(timestamp);
 
-  document.querySelector("#distance span").textContent = (
-    sprite1.x / 5
-  ).toFixed(2);
-  sprite1.x; // Get the distance with the runner moving
+  document.querySelector("#distance span").textContent = (sprite.x / 5).toFixed(
+    2
+  );
+  sprite.x; // Get the distance with the runner moving
   animationId = requestAnimationFrame(updateCanvas);
   //   console.log(animationId);
 }
@@ -67,13 +68,20 @@ startBtn.addEventListener("click", () => {
 //Countdown of 30seconds when player clicked start button
 let count = document.querySelector("#countdown");
 let i = 30;
+let changeLetterTiming = 0;
 count.textContent = 30;
+
 startBtn.addEventListener("click", () => {
   setInterval(() => {
     if (i > 0) {
       i--;
     }
     count.textContent = `${i}`;
+    changeLetterTiming++;
+    if (changeLetterTiming === 1) {
+      getRandomKey();
+      changeLetterTiming = 0;
+    }
   }, 1000);
 });
 
@@ -105,32 +113,6 @@ let array = [
   "x",
   "y",
   "z",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
   0,
   1,
   2,
@@ -143,6 +125,18 @@ let array = [
   9,
 ];
 
-const key = document.querySelector(".randomKey span");
-let randomKey = Math.floor(Math.random() * array.length);
-key.textContent = array[randomKey];
+function getRandomKey() {
+  let randomKey = Math.floor(Math.random() * array.length);
+  oneKey.textContent = array[randomKey];
+}
+
+// Effect of touching the right key
+document.addEventListener("keydown", function event(event) {
+  if (oneKey.textContent === event.key) {
+    console.log(oneKey.textContent, event.key);
+    sprite.speed = 3;
+    setTimeout(() => {
+      sprite.speed = 1;
+    }, 300);
+  }
+});
