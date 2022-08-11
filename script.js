@@ -15,7 +15,7 @@ let intervalFrames = 0;
 
 // Initialization of the runner
 const runner1 = new Image();
-runner1.src = "/images/Sprite.png";
+runner1.src = "images/Sprite.png";
 const sprite = {
   width: 128,
   height: 165,
@@ -172,7 +172,6 @@ resetBtn.addEventListener("click", () => {
     // can't reset while started
     return;
   }
-  console.log("game reset");
   i = 30;
   distance = 0;
   intervalFrames = 0;
