@@ -12,3 +12,5 @@ I first was about to do a minesweeper and thenby talking with one of the student
 - Adding levels to sprint against IA wich is faster as levels increase
 - Cleaner code
 - More beautiful CSS
+# Demo
+https://juliendrm.github.io/The-sprint-game/
