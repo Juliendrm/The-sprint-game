@@ -4,7 +4,7 @@ const startBtn = document.querySelector(`.btn`);
 const resetBtn = document.querySelector(".reset");
 canvas.width = document.body.clientWidth;
 let animationId;
-const oneKey = document.querySelector(".randomKey span"); // For random key
+const oneKey = document.querySelector(".keyDisplay span"); // For random key
 let highscoreElement = document.querySelector("#highscore span");
 let highscore = 0;
 let distanceElement = document.querySelector("#distance span");
@@ -103,6 +103,9 @@ function startTheGame() {
       if (highscore < distance) {
         highscore = distance;
         highscoreElement.textContent = highscore;
+        alert("Well done, you beat your current highscore !");
+      } else {
+        alert("Looser, go back to loosertown");
       }
     }
   }, 100);
@@ -159,7 +162,7 @@ document.addEventListener("keydown", function event(event) {
     sprite.speed = 8;
     setTimeout(() => {
       sprite.speed = 2;
-    }, 400);
+    }, 300);
   }
 });
 
@@ -179,8 +182,6 @@ resetBtn.addEventListener("click", () => {
   highscoreElement.textContent = highscore;
   count.textContent = i;
   distanceElement.textContent = distance;
-  //updateCanvas();
   context.clearRect(0, 0, canvas.width, canvas.height);
-
   sprite.draw(0);
 });

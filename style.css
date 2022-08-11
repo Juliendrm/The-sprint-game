@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Arimo:wght@500&display=swap");
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Arimo", sans-serif;
 }
 
 body {
@@ -25,22 +28,27 @@ div {
 
 .btn {
   background-color: chocolate;
-  border-radius: 15%;
   height: 30px;
   width: 8%;
   font-size: 18px;
   margin: auto;
+}
+
+.btn:hover {
+  background-color: gold;
 }
 
 .reset {
   background-color: chocolate;
-  border-radius: 15%;
   height: 30px;
   width: 8%;
   font-size: 18px;
   margin: auto;
 }
 
+.reset:hover {
+  background-color: crimson;
+}
 canvas {
   border: 1px solid black;
   background-image: url(./images/piste.jpg);
@@ -57,11 +65,12 @@ canvas {
 
 .keyDisplay {
   border: 2px solid black;
-  height: 144px;
-  text-align: center;
+  height: 194px;
   padding-top: 50px;
-  font-size: 40px;
+  font-size: 70px;
   background-color: darkcyan;
+  display: flex;
+  justify-content: center;
 }
 
 .infos {
