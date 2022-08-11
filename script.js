@@ -12,6 +12,48 @@ let distance = 0;
 let intervalId = null;
 let isGameStarted = false;
 let intervalFrames = 0;
+let array = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+];
+//Countdown of 30seconds when player clicked start button. It also display the character when button is pressed with updateCanvas() Also I linked distance with highscore.
+let count = document.querySelector("#countdown");
+let i = 30;
+count.textContent = i;
 
 // Initialization of the runner
 const runner1 = new Image();
@@ -56,7 +98,6 @@ const sprite = {
   },
 };
 
-//
 function updateCanvas(timestamp) {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -72,12 +113,8 @@ function updateCanvas(timestamp) {
 }
 
 //Countdown of 30seconds when player clicked start button. It also display the character when button is pressed with updateCanvas() Also I linked distance with highscore.
-let count = document.querySelector("#countdown");
-let i = 30;
-count.textContent = i;
 
 startBtn.addEventListener("click", startTheGame);
-
 function startTheGame() {
   if (isGameStarted || i === 0) {
     return;
@@ -110,46 +147,8 @@ function startTheGame() {
     }
   }, 100);
 }
-// Get a random keyboard touch (lowercases and numbers rom 0 to 9);
-let array = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  0,
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-];
 
+// Get a random keyboard touch (lowercases and numbers rom 0 to 9);
 function getRandomKey() {
   let randomKey = Math.floor(Math.random() * array.length);
   oneKey.textContent = array[randomKey];
