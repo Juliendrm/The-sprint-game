@@ -11,6 +11,7 @@ let distanceElement = document.querySelector("#distance span");
 let distance = 0;
 let intervalId = null;
 let isGameStarted = false;
+let intervalFrames = 0;
 
 // Initialization of the runner
 const runner1 = new Image();
@@ -68,33 +69,31 @@ function updateCanvas(timestamp) {
   distanceElement.textContent = distance;
   sprite.x; // Get the distance with the runner moving
   animationId = requestAnimationFrame(updateCanvas);
-  //   console.log(animationId);
 }
 
 //Countdown of 30seconds when player clicked start button. It also display the character when button is pressed with updateCanvas() Also I linked distance with highscore.
 let count = document.querySelector("#countdown");
-let i = 5;
-let changeLetterTiming = 0;
+let i = 30;
 count.textContent = i;
 
 startBtn.addEventListener("click", startTheGame);
 
 function startTheGame() {
-  if (isGameStarted) {
+  if (isGameStarted || i === 0) {
     return;
   }
 
   isGameStarted = true;
   requestAnimationFrame(updateCanvas);
   intervalId = setInterval(() => {
-    if (i > 0) {
+    intervalFrames++;
+    if (i > 0 && intervalFrames % 10 === 0) {
       i--;
     }
     count.textContent = `${i}`;
-    changeLetterTiming++;
-    if (changeLetterTiming === 1) {
+
+    if (intervalFrames % 7 === 0) {
       getRandomKey();
-      changeLetterTiming = 0;
     }
     if (i === 0) {
       isGameStarted = false;
@@ -106,7 +105,7 @@ function startTheGame() {
         highscoreElement.textContent = highscore;
       }
     }
-  }, 1000);
+  }, 100);
 }
 // Get a random keyboard touch (lowercases and numbers rom 0 to 9);
 let array = [
@@ -170,10 +169,18 @@ resetBtn.addEventListener("click", () => {
     // can't reset while started
     return;
   }
-  i = 5;
+  console.log("game reset");
+  i = 30;
   distance = 0;
+  intervalFrames = 0;
   sprite.x = 0;
   sprite.y = 165;
+  sprite.lastTimestamp = null;
   highscoreElement.textContent = highscore;
-  requestAnimationFrame(updateCanvas);
+  count.textContent = i;
+  distanceElement.textContent = distance;
+  //updateCanvas();
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  sprite.draw(0);
 });
