@@ -39,16 +39,6 @@ let array = [
   "x",
   "y",
   "z",
-  0,
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
 ];
 //Countdown of 30seconds when player clicked start button. It also display the character when button is pressed with updateCanvas() Also I linked distance with highscore.
 let count = document.querySelector("#countdown");
